@@ -23,7 +23,6 @@ for:
      - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy nose"
      - activate test-environment
      - pip install coverage
-     - pip install -r requirements.txt
      - python setup.py install
 -
   matrix:
@@ -39,6 +38,7 @@ for:
      - conda create -p $HOME/py --yes $deps python=3
      - export PATH=$HOME/py/bin:$PATH
      - sudo apt-get install -qq libatlas-base-dev gfortran
+     - sudo apt install libglib2.0-dev
      - export ATLAS="/usr/lib/atlas-base/libatlas.so"
      - pip install nose
      - python setup.py install
