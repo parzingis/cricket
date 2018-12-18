@@ -16,7 +16,6 @@ for:
      - conda config --set always_yes yes --set changeps1 no
      - conda update -q conda
      - conda info -a
-     - sudo apt install libglib2.0-dev
      - conda create -q -n test-environment python=2.7 numpy scipy nose 
      - activate test-environment
      - pip install coverage
@@ -37,6 +36,7 @@ for:
      - conda create -p $HOME/py --yes $deps python=2.7
      - export PATH=$HOME/py/bin:$PATH
      - sudo apt-get install -qq libatlas-base-dev gfortran
+     - sudo apt install libglib2.0-dev
      - export ATLAS="/usr/lib/atlas-base/libatlas.so"
      - python setup.py install
      - cd tests
