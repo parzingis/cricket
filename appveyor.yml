@@ -1,15 +1,10 @@
 build: false
 
-
 image:
   - Ubuntu
   - Visual Studio 2015
 
 
-environment:
-  matrix:
-    - PYTHON_VERSION: 3
-      MINICONDA: C:\Miniconda
 for:
 -
   matrix:
@@ -17,14 +12,16 @@ for:
         - image: Visual Studio 2015
         
   install:
-     - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+     - set PATH=C:\Miniconda;C:\Miniconda\\Scripts;%PATH%
      - conda config --set always_yes yes --set changeps1 no
      - conda update -q conda
      - conda info -a
-     - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy nose"
+     - sudo apt install libglib2.0-dev
+     - conda create -q -n test-environment python=2.7 numpy scipy nose 
      - activate test-environment
      - pip install coverage
-     - pip install -r requirements.txt
+     - python setup.py install
+     - cd tests
      - python setup.py install
 -
   matrix:
@@ -37,12 +34,14 @@ for:
      - export PATH=/home/appveyor/miniconda/bin:$PATH
      - conda update --yes conda
      - deps="nomkl pip numpy scipy"
-     - conda create -p $HOME/py --yes $deps python=3
+     - conda create -p $HOME/py --yes $deps python=2.7
      - export PATH=$HOME/py/bin:$PATH
      - sudo apt-get install -qq libatlas-base-dev gfortran
      - export ATLAS="/usr/lib/atlas-base/libatlas.so"
-     - pip install nose
      - python setup.py install
+     - cd tests
+     - python setup.py install
+     - pip install nose
 
 
 test_script:
